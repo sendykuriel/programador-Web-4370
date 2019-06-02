@@ -12,26 +12,33 @@
 <body>
 
   <h1> Workshop</h1>
+  <div class="padre">
+    <div class="alumnos">
+      <h2>Lista de alumnos</h2>
+    </div>
 
-  <div class="alumnos">
-    <h2>Lista de alumnos</h2>
+    <div class="ingreso_datos">
+      <h2>Ingreso de datos</h2>
+      <form class="formu" action="" method="post">
+        <input class="in" type="text" name="nombre" placeholder="Nombre">
+        <input class="in" type="text" name="apellido" placeholder="Apellido">
+        <input class="in" type="text" name="DNI" placeholder="DNI">
+        <input class="in" type="text" name="email" placeholder="E-Mail">
+        <input class="bt1" type="submit" value="Agregar Alumno">
+
+      </form>
+      <form class="formu2" action="" method="post">
+        <input type="text" name="nombre" placeholder="Nombre">
+        <input class="bt2" type="submit" value="Eliminar Alumno">
+      </form>
+      <form class="formu2" action="" method="post">
+        <input type="text" name="DNI" placeholder="DNI">
+        <input class="bt3" type="submit" value="Buscar Alumno">
+      </form>
+    </div>
   </div>
-
-  <div class="ingreso_datos">
-    <h2>Ingreso de datos</h2>
-    <form action="" method="post">
-      <input type="text" name="nombre">
-      <input type="text" name="apellido">
-      <input type="text" name="DNI">
-      <input type="text" name="email">
-    </form>
-    <input type="submit" value="Agregar Alumno">
-    <input type="text" name="nombre">
-    <input type="submit" value="Eliminar Alumno">
-    <input type="text" name="DNI">
-    <input type="submit" value="Buscar Alumno">
   </div>
-
+  </div>
 
 </body>
 
