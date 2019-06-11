@@ -1,4 +1,3 @@
-## Usar funciones y estructura for o while.
 ### Escribir una función llamada diaSemanaNumero() que reciba un día de la semana e indique un número según corresponda:
 
 Ejemplo:
