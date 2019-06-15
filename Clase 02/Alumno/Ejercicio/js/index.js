@@ -4,11 +4,13 @@ var diaSem = prompt('Ingrese un dia de la semana')
 var diaminuscula = diaSem.toLocaleLowerCase()
 
 switch (diaSem) {
+
   case 'lunes':
   case 'martes':
   case 'miercoles':
   case 'jueves':
   case 'viernes':
+
     console.log('Dia Habil')
     break;
   case 'sabado':
@@ -18,5 +20,6 @@ switch (diaSem) {
 
   default:
     console.log('Ingrese un día válido')
+
     break;
 }
