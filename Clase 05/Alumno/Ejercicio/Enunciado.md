@@ -1,5 +1,5 @@
 # Crear una función constructora de objetos Car
-
+ 
 - Crear una función que permita crear un objeto Car mediante el constructor `new`, el objeto deberá tener las siguientes propiedades:
    - Publicas:
       - `model`
@@ -33,11 +33,13 @@ var cars = [
   }
 ]
 ```
-  
+
 > Existe una función que devuelve un número random que nos puede servir para hacer un id único.
 
 ```js
 var randomNumber = Math.random() // Esto devuelve un número del estilo 0.11296860298890499
+//usar date.now()
+
 ```
 
 **Documentación:**
