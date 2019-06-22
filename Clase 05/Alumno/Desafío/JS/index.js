@@ -18,6 +18,8 @@ var students = [{
   }
 ]
 
+//Creo función constructora Student. Dentro tengo propiedades privadas declaradas con LET
+//también métodos para esa propiedad
 
 function Student(firstName, lastName, dni, email) {
   this.firstName = firstName
@@ -29,6 +31,8 @@ function Student(firstName, lastName, dni, email) {
     return id
   }
 }
+
+//Creo un método para las propiedades publicas usando prototype
 
 Student.prototype.getFullName = function () {
   if (this.firstName && this.lastName) {
