@@ -7,7 +7,6 @@ window.onload = function () {
   fieldEmail.onblur = function (event) {
 
     let value = event.target.value
-    console.log(value)
     if (value && value.indexOf("@") > -1 && value.indexOf(".") > -1) {
 
       event.target.classList.add('is-valid')
