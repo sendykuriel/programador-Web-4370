@@ -3,7 +3,7 @@ window.onload = function () {
   //constantes
   const KEY_STORE = 'keyStore' //donde vamos a guardar la data en el local store
 
-  //cargo los campos del formlario
+  //cargo los campos del formlario - traigo los elementos por id
 
   let nombre = document.getElementById("firstName")
   let apellido = document.getElementById("lastName")
@@ -11,12 +11,13 @@ window.onload = function () {
   let email = document.getElementById("email")
   let mainList = document.getElementById("mainList")
   let deletDni = document.getElementById("deleteDni")
-
-
-
+  let searchText = document.getElementById("searchText")
+  let searchList = document.getElementById("searchList") //donde pongo los resultados
   //agrego botones
   let addStudentButton = document.getElementById("addStudentButton")
   let deleteStudenButton = document.getElementById("deleteStudentButton")
+  let searchStudentButton = document.getElementById("searchStudentButton")
+
 
   //initialize
 
@@ -25,11 +26,25 @@ window.onload = function () {
   renderStudents(mainList, dataStore) //pone los estudiantes que ya están en memoria, recibe el array y donde ponerlo  
 
 
+
+  //validations & events
+  nombre.onblur = validateNotEmpty
+  apellido.onblur = validateNotEmpty
+  dni.onblur = validateNotZero
+  email.onblur = validateEmail
+  addStudentButton.onclick = addStudent
+  deleteStudenButton.onclick = deleteStudent
+  searchStudentButton.onclick = searchStudent
+
+
   //Render functions 
 
-  function renderStudents(ancla, studentsArray) {
+  function renderStudents(list, studentsArray) {
+    while (list.hasChildNodes()) { //de acá borro los nodos anteriore, para limpiar la screen 
+      listo.removeChild(list.firstChild)
+    }
     for (let i = 0; i < studentsArray.length; i++) {
-      ancla.appendChild(createStudentNode(studentsArray[i]))
+      list.appendChild(createStudentNode(studentsArray[i]))
     }
 
   }
@@ -45,7 +60,7 @@ window.onload = function () {
     let email = document.createElement('p')
 
     //Defino ID y Clases
-    item.id = '22999333'
+    item.id = student.dni //le pongo de Id el DNI :)
     item.className = 'list-group-item'
 
     //Defino Contenidos
@@ -67,8 +82,8 @@ window.onload = function () {
   //si la local lista está vacía, la inicializo con la key y un array vacío, y despues devuelve el array vacío (para guardarlo en la variable dataStore)
 
   function getDataStore(key) {
-    if (!getLocalList(key)) {
-      setLocalList(key, [])
+    if (!getLocalList(key)) { //!--> devuelve true
+      setLocalList(key, []) //creo store con array vacío si el store no existe
     } else {
       return getLocalList(key)
     }
@@ -79,15 +94,13 @@ window.onload = function () {
 
   function addStudent() { //-funcion que se llama cuando aprieto el boton :) 
     console.log('hola')
-    var student = getStudentFromForm() //esta funcion trae el objeto, y luego le hago push al array dataStore
+    var student = getStudentFromForm() //esta funcion trae un objeto con los datos, y luego le hago push al array dataStore
     dataStore.push(student) //-->guardo los objetos en un array 
-    //ahora lo persisto --> la mando al local store
+    //ahora actualizo el data store 
     setLocalList(KEY_STORE, dataStore)
     clearStudentForm() //-->vuelvo a formulario vacío
     mainList.appendChild(createStudentNode(student)) //--->renderizo
     addStudentButton.disabled = true
-
-
   }
 
   function clearStudentForm() {
@@ -95,6 +108,7 @@ window.onload = function () {
     apellido.value = ''
     dni.value = ''
     email.value = ''
+    deletDni.value = ''
   }
 
 
@@ -110,17 +124,50 @@ window.onload = function () {
 
 
   function deleteStudent() {
-
     //tomo el valor del input dniDelete
-    //buscar ese valor en el dataStorage  y si ese valor existe, lo tengo que borrar del array -->funcion removeStudentFromDataStore()
-    //persistir datastore en local store --> set local list!
-    //remover el student renderizado en el DOM --> para que sea mas facil, modificar el set en el HTML y que ponga el ID=DNI así es mas facil hacer un get element por DNI. Entonces var elementoARemover = document.getelementoyid("elnumerodedni y lusto")
-    //usar: elementoARemover.remove (creo q es este)
-
+    if (removeStudentFromDataStore(dataStore, deleteDni.value)) {
+      //persistir datastore en local store --> set local list!
+      setLocalList(KEY_STORE, dataStore)
+      //limpio el formulario
+      //remuevo el renderizado 
+      let liToBeRemoved = document.getElementById(deleteDni.value) //recordar que cada Li creado le pusimos de ID su dni :)
+      liToBeRemoved.remove()
+    }
   }
 
 
-  function removeStudentFromDataStore() {
+  function searchStudent() {
+    //tomo el texto que estoy buscando
+    let textToBeSearched = searchText.value
+    let studentsWhoMatchSearch = [] //-->aca guardo
+    //busco el elemento en el datastore
+    for (let i = 0; i < dataStore.length; i++) {
+      let student = dataStore[i]
+      let isInName = student.firstName.indexOf(textToBeSearched) > -1 //-->esto devuelve tru o false
+      let isInLastName = student.lastName.indexOf(textToBeSearched) > -1 //-->esto devuelve tru o false
+      let isInEmail = student.email.indexOf(textToBeSearched) > -1 //-->esto devuelve tru o false
+      let isInDni = student.dni.indexOf(textToBeSearched) > -1 //-->esto devuelve tru o false
+      if (isInDni === true || isInEmail === true || isInLastName === true || isInLastName === true) { //si se cumple, armo un array con los que matchearon
+        studentsWhoMatchSearch.push(student)
+
+      }
+
+    }
+    //llamo la función del renderizador
+    renderStudents(searchList, studentsWhoMatchSearch)
+  }
+
+
+
+  function removeStudentFromDataStore(dataStore, dni) {
+    for (let i = 0; i < dataStore.length; i++) {
+      let student = dataStore[i];
+      if (student.dni === dni) {
+        dataStore.splice(i, 1);
+        return true
+      }
+    }
+    return false
     //acá hago que recorra el ddats store y si el (donde dataStore(i) =student) student.dni === dni, entonces hago un recorte de ese array sacando ese coso, usar el splice!
     //uri: este código esta en el slack por si es dificil!!
   }
@@ -151,13 +198,6 @@ window.onload = function () {
 
 
 
-  //validations & events
-  nombre.onblur = validateNotEmpty
-  apellido.onblur = validateNotEmpty
-  dni.onblur = validateNotZero
-  email.onblur = validateEmail
-  addStudentButton.onclick = addStudent
-  deleteStudenButton.onclick = deleteStudent
 
 
 
