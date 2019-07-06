@@ -9,10 +9,17 @@ window.onload = function () {
   }
 
 
+  let ul = document.getElementById('lista')
+  //Asigno Parentescos
+
+  item.appendChild(nombre)
+  item.appendChild(dni)
+  item.appendChild(email)
+  ul.appendChild(item)
+
 
   function createStudentNode(student) {
 
-    let ul = document.getElementById('lista')
 
     //Creo Elementos
 
@@ -32,12 +39,7 @@ window.onload = function () {
 
 
 
-    //Asigno Parentescos
 
-    item.appendChild(nombre)
-    item.appendChild(dni)
-    item.appendChild(email)
-    ul.appendChild(item)
     return item
   }
 

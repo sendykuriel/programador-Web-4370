@@ -10,11 +10,13 @@ window.onload = function () {
   let dni = document.getElementById("dni")
   let email = document.getElementById("email")
   let mainList = document.getElementById("mainList")
+  let deletDni = document.getElementById("deleteDni")
 
 
 
   //agrego botones
   let addStudentButton = document.getElementById("addStudentButton")
+  let deleteStudenButton = document.getElementById("deleteStudentButton")
 
   //initialize
 
@@ -107,6 +109,24 @@ window.onload = function () {
   }
 
 
+  function deleteStudent() {
+
+    //tomo el valor del input dniDelete
+    //buscar ese valor en el dataStorage  y si ese valor existe, lo tengo que borrar del array -->funcion removeStudentFromDataStore()
+    //persistir datastore en local store --> set local list!
+    //remover el student renderizado en el DOM --> para que sea mas facil, modificar el set en el HTML y que ponga el ID=DNI así es mas facil hacer un get element por DNI. Entonces var elementoARemover = document.getelementoyid("elnumerodedni y lusto")
+    //usar: elementoARemover.remove (creo q es este)
+
+  }
+
+
+  function removeStudentFromDataStore() {
+    //acá hago que recorra el ddats store y si el (donde dataStore(i) =student) student.dni === dni, entonces hago un recorte de ese array sacando ese coso, usar el splice!
+    //uri: este código esta en el slack por si es dificil!!
+  }
+
+
+
   //local storage functions
   function getLocalList(key) {
 
@@ -137,6 +157,7 @@ window.onload = function () {
   dni.onblur = validateNotZero
   email.onblur = validateEmail
   addStudentButton.onclick = addStudent
+  deleteStudenButton.onclick = deleteStudent
 
 
 
