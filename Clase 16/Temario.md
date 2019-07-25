@@ -4,4 +4,4 @@
 - 16.2 Creación e instalación de la estructura de un proyecto SPA
 - 16.3 Module Pattern
 - 16.4 Router de una SPA
-- 16.5 Método `load()` de jQuery y patrón MVC
+- 16.5 Método `load()` de jQuery y patrón MVC 
