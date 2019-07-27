@@ -3,8 +3,10 @@ import homeController from './controllers/homeController'
 import contactController from './controllers/contactController'
 import peopleController from './controllers/peopleController'
 import savedController from './controllers/savedController'
+import { searchController } from './controllers/searchController'
 
 homeController()
+searchController()
 
 function router() {
 

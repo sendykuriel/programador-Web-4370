@@ -1,6 +1,7 @@
 import { savePerson, isSaved } from '../utils/dataStore'
 import { translateToSpanish } from '../utils/dictionary'
 import { getId } from '../utils/utils'
+
 var nextPage
 var index
 var characters
