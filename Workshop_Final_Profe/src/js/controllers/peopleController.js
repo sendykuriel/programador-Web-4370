@@ -1,15 +1,21 @@
+import { savePerson, isSaved } from '../utils/dataStore'
 var nextPage
 var index
+var characters
 
 function peopleController() {
   $('#root').load('./partials/people.html', function () {
     addEventToSeeMoreButton()
     nextPage = 'https://swapi.co/api/people/'
     index = 1
+    characters = {}
     $.ajax(nextPage)
       .done(handleData)
     //.fail(function)
   })
+}
+function getId(person) {
+  return parseInt(person.url.split('/')[5])
 }
 
 function handleData(data) {
@@ -18,9 +24,13 @@ function handleData(data) {
   console.log(data)
   for (var i = 0; i < people.length; i++) {
     var person = people[i];
-    renderPerson('#tableBody', person, index)
-    index++
+    var id = getId(person)
+    characters[id] = person
+    if (!isSaved(id)) {
+      renderPerson('#tableBody', person, id)
+    }
   }
+  console.log(characters)
   if (!nextPage) {
     $('#seeMore').hide()
   }
@@ -49,16 +59,17 @@ function translateToSpanish(wordInEnglish) {
 
 function renderPerson(anclaSelector, person, id) {
   $(anclaSelector).append(`
-        <tr>
+      <tr id="person-${id}">
         <td scope="row">${id}</td>
         <td scope="row">${person.name.toLowerCase()}</td>
         <td scope="row">${translateToSpanish(person.gender)}</td>
         <td scope="row">${person.height}</td>
         <td scope="row">${person.mass}</td>
         <td scope="row">${translateToSpanish(person.eye_color)}</td>
-        <td scope="row"><button type="button" class="btn btn-success">Guardar</button></td>
+        <td scope="row"><button type="button" id="button-${id}" data-id=${id} class="btn btn-success btn-save">Guardar</button></td>
       </tr>
         `)
+  addEventToSaveButton(`#button-${id}`)
 }
 
 function addEventToSeeMoreButton() {
@@ -70,6 +81,17 @@ function addEventToSeeMoreButton() {
       $.ajax(nextPage)
         .done(handleData)
     }
+  })
+}
+
+function addEventToSaveButton(selector) {
+  var button = $(selector)
+  button.click(function (event) {
+    var target = $(event.target)
+    var id = target.attr('data-id')
+    var trToRemove = $(`#person-${id}`)
+    savePerson(id, characters[id])
+    trToRemove.remove()
   })
 }
 
