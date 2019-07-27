@@ -1,6 +1,8 @@
 import { savePerson, deletePerson, isSaved, dataStore } from '../utils/dataStore'
 import { translateToSpanish } from '../utils/dictionary'
 import { getId } from '../utils/utils'
+import { filterString } from './searchController'
+
 var nextPage
 var index
 var characters
@@ -11,7 +13,10 @@ function savedController() {
     for (var i = 0; i < allKeys.length; i++) {
       var person = dataStore[allKeys[i]];
       var id = getId(person)
-      renderPerson('#tableBody', person, id)
+      console.log(person.name, filterString)
+      if (person.name.toLowerCase().indexOf(filterString.toLowerCase()) > -1) {
+        renderPerson('#tableBody', person, id)
+      }
     }
   })
 }
