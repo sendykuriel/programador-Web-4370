@@ -2,6 +2,7 @@ import crossroads from 'crossroads'
 import homeController from './controllers/homeController'
 import contactController from './controllers/contactController'
 import peopleController from './controllers/peopleController'
+import savedController from './controllers/savedController'
 
 homeController()
 
@@ -10,6 +11,8 @@ function router() {
   crossroads.addRoute('#/home', homeController)
 
   crossroads.addRoute('#/contact', contactController)
+
+  crossroads.addRoute('#/local-storage', savedController)
 
   crossroads.addRoute('#/people', peopleController)
   // En cada cambio del # va a verificar las rutas
