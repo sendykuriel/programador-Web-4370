@@ -1,15 +1,14 @@
 {
-  "name": "workshop-final",
+  "name": "workshop_final",
   "version": "1.0.0",
-  "description": "Workshop final - Camada 4370",
+  "description": "workshop final - camada 4370",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "batman": "ls"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Uriel Sendyk",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.1.2",
